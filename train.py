@@ -25,7 +25,7 @@ add_arg('gpus',             str,    '0',                      '训练使用的GP
 add_arg('batch_size',       int,    16,                       '训练的批量大小')
 add_arg('num_workers',      int,    4,                        '读取数据的线程数量')
 add_arg('num_epoch',        int,    8,                       '训练的轮数')
-add_arg('num_classes',      int,    3242,                     '分类的类别数量')
+add_arg('num_classes',      int,    251,                     '分类的类别数量')
 add_arg('learning_rate',    float,  1e-3,                     '初始学习率的大小')
 add_arg('weight_decay',     float,  5e-4,                     'weight_decay的大小')
 add_arg('lr_step',          int,    10,                       '学习率衰减步数')
@@ -33,8 +33,8 @@ add_arg('input_shape',      str,    '(1, 257, 257)',          '数据输入的�
 add_arg('train_list_path',  str,    'dataset/train_list.txt', '训练数据的数据列表路径')
 add_arg('test_list_path',   str,    'dataset/test_list.txt',  '测试数据的数据列表路径')
 add_arg('save_model',       str,    'models/',                '模型保存的路径')
-add_arg('resume',           str,    None,                     '恢复训练，当为None则不使用恢复模型')
-add_arg('pretrained_model', str,    None,                     '预训练模型的路径，当为None则不使用预训练模型')
+add_arg('resume',           str,    'models/epoch_3',     '恢复训练，当为None则不使用恢复模型')
+add_arg('pretrained_model', str,    'models/resnet34.pth',                     '预训练模型的路径，当为None则不使用预训练模型')
 args = parser.parse_args()
 
 
@@ -146,7 +146,7 @@ def train():
             loss.backward()
             optimizer.step()
 
-            if batch_id % 20 == 0:
+            if batch_id % 100 == 0:
                 output = output.data.cpu().numpy()
                 output = np.argmax(output, axis=1)
                 label = label.data.cpu().numpy()
