@@ -2,6 +2,7 @@ import os
 import re
 import shutil
 import time
+import winsound
 from datetime import datetime, timedelta
 import argparse
 import functools
@@ -21,7 +22,7 @@ from utils.utility import add_arguments, print_arguments
 parser = argparse.ArgumentParser(description=__doc__)
 add_arg = functools.partial(add_arguments, argparser=parser)
 add_arg('gpus',             str,    '0',                      '训练使用的GPU序号，使用英文逗号,隔开，如：0,1')
-add_arg('batch_size',       int,    32,                       '训练的批量大小')
+add_arg('batch_size',       int,    16,                       '训练的批量大小')
 add_arg('num_workers',      int,    4,                        '读取数据的线程数量')
 add_arg('num_epoch',        int,    8,                       '训练的轮数')
 add_arg('num_classes',      int,    3242,                     '分类的类别数量')
@@ -174,3 +175,5 @@ if __name__ == '__main__':
     os.environ["CUDA_VISIBLE_DEVICES"] = args.gpus
     print_arguments(args)
     train()
+    winsound.PlaySound('Tik Tok.wav', winsound.SND_FILENAME)
+
